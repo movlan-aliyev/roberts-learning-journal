@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Redirecting…</title>
+  <script>
+    // GitHub Pages SPA fallback: redirect unknown paths to index with path in query
+    sessionStorage.setItem("spa-redirect", location.pathname + location.search + location.hash);
+    location.replace(location.origin + (location.pathname.startsWith("/roberts-learning-journal") ? "/roberts-learning-journal/" : "/"));
+  </script>
+</head>
+<body>
+  <p>Redirecting…</p>
+</body>
+</html>

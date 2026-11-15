@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@theme {
+  /* Warm paper palette */
+  --color-paper: #F7F5EF;
+  --color-paper-dark: #1a1a1a;
+  --color-ink: #102033;
+  --color-ink-light: #e8e6e0;
+  --color-teal: #167D8D;
+  --color-teal-light: #1a9eaf;
+  --color-gold: #B28B4B;
+  --color-gold-light: #d4a85a;
+  --color-border: #d6d3cb;
+  --color-border-dark: #333;
+  --color-muted: #6b6560;
+  --color-muted-dark: #999;
+  --color-success: #2d8a4e;
+  --color-warning: #c27c0e;
+  --color-danger: #c0392b;
+
+  /* Category accent colors */
+  --color-cat-flags: #c0392b;
+  --color-cat-quran: #1a6b4a;
+  --color-cat-geography: #2980b9;
+  --color-cat-science: #8e44ad;
+  --color-cat-sports: #d35400;
+  --color-cat-literature: #6c3483;
+  --color-cat-movies: #e74c3c;
+  --color-cat-brands: #2c3e50;
+  --color-cat-books: #b28b4b;
+
+  /* Type scale */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1.125rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 1.875rem;
+  --font-size-3xl: 2.25rem;
+  --font-size-4xl: 3rem;
+
+  --font-serif: "Georgia", "Noto Serif", "Times New Roman", serif;
+  --font-sans: "Inter", "Segoe UI", "Noto Sans", system-ui, sans-serif;
+  --font-arabic: "Noto Naskh Arabic", "Traditional Arabic", "Amiri", serif;
+
+  /* Spacing */
+  --spacing-page: clamp(1rem, 5vw, 4rem);
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+}
+
+.dark body {
+  color: var(--color-ink-light);
+  background-color: var(--color-paper-dark);
+}
+
+/* Serif headings */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  line-height: 1.25;
+}
+
+/* Arabic text blocks */
+[lang="ar"], .arabic-text {
+  font-family: var(--font-arabic);
+  direction: rtl;
+  text-align: right;
+  line-height: 2;
+  font-size: 1.3em;
+}
+
+/* Article prose */
+.prose {
+  max-width: 65ch;
+}
+
+.prose p { margin-bottom: 1.25em; }
+.prose h2 { margin-top: 2em; margin-bottom: 0.75em; font-size: var(--font-size-xl); }
+.prose h3 { margin-top: 1.5em; margin-bottom: 0.5em; font-size: var(--font-size-lg); }
+.prose ul, .prose ol { margin-bottom: 1.25em; padding-left: 1.5em; }
+.prose li { margin-bottom: 0.5em; }
+.prose blockquote {
+  border-left: 3px solid var(--color-teal);
+  padding-left: 1em;
+  margin: 1.5em 0;
+  color: var(--color-muted);
+  font-style: italic;
+}
+.prose a { color: var(--color-teal); text-decoration: underline; text-underline-offset: 2px; }
+.prose img { border-radius: 8px; margin: 1.5em 0; }
+.prose table { width: 100%; border-collapse: collapse; margin: 1.5em 0; }
+.prose th, .prose td { border: 1px solid var(--color-border); padding: 0.5em 0.75em; text-align: left; }
+.prose th { background: rgba(22, 125, 141, 0.08); font-weight: 600; }
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 0.5em 1em;
+  background: var(--color-teal);
+  color: white;
+}
+.skip-link:focus { left: 1em; top: 1em; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+
+/* Card hover */
+.card-hover {
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.card-hover:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
