@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { db, type Post, type Category, type Program } from "@/lib/db";
+import { db, type Post, type Category } from "@/lib/db";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -12,17 +12,12 @@ import { SkillPoster } from "@/components/visuals/CategoryVisual";
 export default function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [programs, setPrograms] = useState<Program[]>([]);
 
   useEffect(() => {
     db.posts.where("status").equals("published").reverse().sortBy("publishedAt").then(p => setPosts(p.slice(0, 6)));
     db.categories.orderBy("order").toArray().then((rows) => {
       const seen = new Set<string>();
       setCategories(rows.filter((c) => (seen.has(c.slug) ? false : (seen.add(c.slug), true))));
-    });
-    db.programs.orderBy("order").toArray().then((rows) => {
-      const seen = new Set<string>();
-      setPrograms(rows.filter((p) => (seen.has(p.slug) ? false : (seen.add(p.slug), true))).slice(0, 4));
     });
   }, []);
 
@@ -40,15 +35,23 @@ export default function HomePage() {
           Learn something. Understand it. Make it your own.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
-          <Link href="/learn/today">
-            <Button size="lg">Start studying <ArrowRight size={18} /></Button>
+          <Link href="/journal">
+            <Button size="lg">Journal <ArrowRight size={18} /></Button>
           </Link>
-          <Link href="/skills">
+          <Link href="/explore">
             <Button size="lg" variant="secondary">
-              Browse Skills <ArrowRight size={18} />
+              Explore <ArrowRight size={18} />
+            </Button>
+          </Link>
+          <Link href="/learn/review">
+            <Button size="lg" variant="ghost">
+              Review
             </Button>
           </Link>
         </div>
+        <p className="text-xs text-muted mt-4 max-w-md mx-auto">
+          Public can read and review. Write stays locked to the owner.
+        </p>
       </section>
 
       {/* Featured with visual */}
@@ -80,27 +83,6 @@ export default function HomePage() {
           </Link>
         </section>
       )}
-
-      {/* Skills strip — always visible */}
-      <section className="mb-12">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-serif text-xl font-semibold">Skills I&#39;m Building</h2>
-          <Link href="/skills" className="text-sm text-teal hover:underline">All skills &rarr;</Link>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {programs.map(prog => (
-            <Link key={prog.id} href={`/skills/${prog.slug}`}>
-              <Card hoverable padding="none" className="overflow-hidden h-full">
-                <SkillPoster slug={prog.slug} className="!my-0 rounded-none" />
-                <div className="p-3">
-                  <h3 className="font-semibold text-sm">{prog.name}</h3>
-                  <p className="text-xs text-muted mt-1">{prog.durationWeeks} weeks</p>
-                </div>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </section>
 
       {recent.length > 0 && (
         <section className="mb-12">
@@ -159,8 +141,7 @@ export default function HomePage() {
           <BookOpen size={32} className="text-teal mx-auto mb-3" />
           <h2 className="font-serif text-xl font-semibold mb-2">About This Journal</h2>
           <p className="text-muted dark:text-muted-dark mb-4">
-            A personal learning journal with verified explanations, visuals for every topic,
-            and private skill programs for driving, home planning, gardening, and more.
+            A personal learning journal with verified explanations and visuals for every topic.
           </p>
           <Link href="/about"><Button variant="secondary">Learn more about me</Button></Link>
         </Card>

@@ -12,8 +12,8 @@ export function Footer() {
         </div>
         <nav className="flex gap-4" aria-label="Footer">
           <Link href="/journal" className="hover:text-ink dark:hover:text-ink-light transition-colors">Journal</Link>
-          <Link href="/skills" className="hover:text-ink dark:hover:text-ink-light transition-colors">Skills</Link>
           <Link href="/explore" className="hover:text-ink dark:hover:text-ink-light transition-colors">Explore</Link>
+          <Link href="/learn/review" className="hover:text-ink dark:hover:text-ink-light transition-colors">Review</Link>
           <Link href="/about" className="hover:text-ink dark:hover:text-ink-light transition-colors">About</Link>
         </nav>
         <p>&copy; {new Date().getFullYear()} Robert Aliyev</p>

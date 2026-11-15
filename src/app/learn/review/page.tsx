@@ -2,14 +2,29 @@
 import { useEffect, useState, useCallback } from "react";
 import { db, type Flashcard, type ReviewState } from "@/lib/db";
 import { getDueCards, reviewCard } from "@/lib/spaced-repetition";
-import { OwnerGuard } from "@/components/OwnerGuard";
+import { useAuth } from "@/lib/auth";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { RotateCcw, Eye, CheckCircle } from "lucide-react";
 import Link from "next/link";
 
+/** Review is public — visitors may practice cards; they cannot write or run Study. */
 export default function ReviewPage() {
-  return <OwnerGuard><ReviewContent /></OwnerGuard>;
+  return <ReviewContent />;
+}
+
+function GuestOrOwnerHome() {
+  const { isOwner } = useAuth();
+  return (
+    <div className="flex flex-wrap gap-3 justify-center">
+      <Link href="/"><Button variant="secondary">Home</Button></Link>
+      {isOwner ? (
+        <Link href="/learn/today"><Button>Back to Study</Button></Link>
+      ) : (
+        <Link href="/journal"><Button>Read Journal</Button></Link>
+      )}
+    </div>
+  );
 }
 
 function ReviewContent() {
@@ -58,7 +73,7 @@ function ReviewContent() {
       <p className="text-muted dark:text-muted-dark mb-6">
         {reviewed > 0 ? `You reviewed ${reviewed} cards.` : "No cards are due for review right now."}
       </p>
-      <Link href="/learn/today"><Button>Back to Today</Button></Link>
+      <GuestOrOwnerHome />
     </div>
   );
 

@@ -44,11 +44,16 @@ function ProgramsContent() {
     <div className="max-w-5xl mx-auto px-[var(--spacing-page)] py-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-serif text-3xl font-bold mb-2">Skills &amp; Programs</h1>
-          <p className="text-muted dark:text-muted-dark">Structured study tracks with illustrated lessons</p>
+          <h1 className="font-serif text-3xl font-bold mb-2">Programs</h1>
+          <p className="text-muted dark:text-muted-dark">Skill tracks are removed. Journal and Review stay.</p>
         </div>
-        <Link href="/skills" className="text-sm text-teal hover:underline">Public skills page →</Link>
       </div>
+
+      {programs.length === 0 && (
+        <Card padding="lg" className="text-center text-muted text-sm">
+          No skill programs. Use Journal, Explore, and Review.
+        </Card>
+      )}
 
       <div className="grid sm:grid-cols-2 gap-4">
         {programs.map(prog => {

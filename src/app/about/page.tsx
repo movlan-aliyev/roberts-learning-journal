@@ -65,9 +65,7 @@ export default function AboutPage() {
           literature, brands, sports, books, and films -- and share what I learn with verified sources and honest perspective.
         </p>
         <p className="text-muted dark:text-muted-dark">
-          I also follow structured learning programs in driving, home construction, gardening, livestock, automotive repair,
-          firearm safety, and communication skills. The private learning workspace helps me study daily, track progress,
-          and review with spaced repetition.
+          Visitors can read the journal and use Review. Write and Study stay locked to me as the owner.
         </p>
       </Card>
     </div>

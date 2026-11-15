@@ -1,20 +1,29 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { BookOpen, Menu, X } from "lucide-react";
+import { BookOpen, Menu, X, LogIn, LogOut } from "lucide-react";
+import { useAuth } from "@/lib/auth";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { isOwner, loading, logout } = useAuth();
 
-  const links = [
+  const publicLinks = [
     { href: "/journal", label: "Journal" },
     { href: "/explore", label: "Explore" },
-    { href: "/skills", label: "Skills" },
-    { href: "/learn/today", label: "Study" },
     { href: "/learn/review", label: "Review" },
-    { href: "/studio/posts", label: "Write" },
     { href: "/about", label: "About" },
   ];
+
+  const ownerLinks = [
+    { href: "/learn/today", label: "Study" },
+    { href: "/studio/posts", label: "Write" },
+    { href: "/settings", label: "Settings" },
+  ];
+
+  const links = isOwner
+    ? [...publicLinks.slice(0, 3), ...ownerLinks, publicLinks[3]]
+    : publicLinks;
 
   return (
     <header className="sticky top-0 z-40 bg-paper/95 dark:bg-paper-dark/95 backdrop-blur border-b border-border dark:border-border-dark">
@@ -35,6 +44,25 @@ export function Header() {
               {l.label}
             </Link>
           ))}
+          {!loading && (
+            isOwner ? (
+              <button
+                type="button"
+                onClick={logout}
+                className="px-3 py-1.5 text-sm rounded-md hover:bg-ink/5 dark:hover:bg-white/10 inline-flex items-center gap-1"
+                aria-label="Sign out"
+              >
+                <LogOut size={14} /> Out
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                className="px-3 py-1.5 text-sm rounded-md hover:bg-ink/5 dark:hover:bg-white/10 inline-flex items-center gap-1"
+              >
+                <LogIn size={14} /> Owner
+              </Link>
+            )
+          )}
         </nav>
 
         <button
@@ -61,6 +89,25 @@ export function Header() {
               {l.label}
             </Link>
           ))}
+          {!loading && (
+            isOwner ? (
+              <button
+                type="button"
+                onClick={() => { logout(); setMobileOpen(false); }}
+                className="block w-full text-left px-3 py-2 rounded-md hover:bg-ink/5 text-sm"
+              >
+                Sign out
+              </button>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setMobileOpen(false)}
+                className="block px-3 py-2 rounded-md hover:bg-ink/5 text-sm"
+              >
+                Owner sign-in
+              </Link>
+            )
+          )}
         </nav>
       )}
     </header>
